@@ -1,14 +1,14 @@
-#include <iostream>
-#include <algorithm>
-#include <string>
-#include <vector>
-#include <cmath>
-#include <sstream>
-#include <queue>
-#include <stack>
-#include <deque>
+// #include <iostream>
+// #include <algorithm>
+// #include <string>
+// #include <vector>
+// #include <cmath>
+// #include <sstream>
+// #include <queue>
+// #include <stack>
+// #include <deque>
 
-using namespace std;
+// using namespace std;
 
 // void dfs(bool visited[], vector<int> graph[], int x) {
 //     visited[x] = true;
@@ -58,40 +58,40 @@ using namespace std;
 //     bfs(visited, graph, 1);
 // }
 
-bool dfs(vector<int> graph[], int x, int y, int n, int m) {
-    if (x < 0 || x > n - 1 || y < 0 || y > m - 1) return false;
+// bool dfs(vector<int> graph[], int x, int y, int n, int m) {
+//     if (x < 0 || x > n - 1 || y < 0 || y > m - 1) return false;
 
-    if (graph[x][y] == 0) {
-        graph[x][y] = 1;
+//     if (graph[x][y] == 0) {
+//         graph[x][y] = 1;
 
-        dfs(graph, x, y - 1, n, m);
-        dfs(graph, x - 1, y, n, m);
-        dfs(graph, x, y + 1, n, m);
-        dfs(graph, x + 1, y, n, m);
+//         dfs(graph, x, y - 1, n, m);
+//         dfs(graph, x - 1, y, n, m);
+//         dfs(graph, x, y + 1, n, m);
+//         dfs(graph, x + 1, y, n, m);
 
-        return true;
-    } else return false;
-}
+//         return true;
+//     } else return false;
+// }
 
-int main() {
-    int n, m;
-    cin >> n >> m;
-    vector<int> graph[n];
-    int answer = 0;
+// int main() {
+//     int n, m;
+//     cin >> n >> m;
+//     vector<int> graph[n];
+//     int answer = 0;
 
-    for (int i = 0; i < n; i++) {
-        string s;
-        cin >> s;
-        for (int j = 0; j < m; j++) {
-            graph[i].push_back(s[j] - '0');
-        }
-    }
+//     for (int i = 0; i < n; i++) {
+//         string s;
+//         cin >> s;
+//         for (int j = 0; j < m; j++) {
+//             graph[i].push_back(s[j] - '0');
+//         }
+//     }
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            if (dfs(graph, i, j, n, m)) answer++;
-        }
-    }
+//     for (int i = 0; i < n; i++) {
+//         for (int j = 0; j < m; j++) {
+//             if (dfs(graph, i, j, n, m)) answer++;
+//         }
+//     }
 
-    cout << answer << '\n';
-}
+//     cout << answer << '\n';
+// }
