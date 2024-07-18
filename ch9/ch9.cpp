@@ -5,6 +5,7 @@
 #include <deque>
 #include <cmath>
 #include <tuple>
+#include <queue>
 
 #define INF 1e9
 
@@ -12,37 +13,25 @@ using namespace std;
 
 int n, m, start;
 
-int getSmallestNode(vector<bool>& visited, vector<int>& d) {
-    int min = INF;
-    int index = -1;
-
-    for (int i = 1; i < n + 1; i++) {
-        if (d[i] < min && !visited[i]) {
-            min = d[i];
-            index = i;
-        }
-    }
-
-    return index;
-}
-
-void dijkstra(vector<vector<pair<int, int>>>& graph, vector<bool>& visited, vector<int>& d) {
+void dijkstra(vector<vector<pair<int, int>>>& graph, vector<int>& d) {
+    priority_queue<pair<int, int>> pq;
+    
     d[start] = 0;
-    visited[start] = true;
+    pq.push({0, start});
 
-    for (int i = 0; i < graph[start].size(); i++) {
-        d[graph[start][i].first] = graph[start][i].second;
-    }
+    while(!pq.empty()) {
+        int distance = -pq.top().first;
+        int nextNode = pq.top().second;
+        pq.pop();
 
-    for (int i = 0; i < n - 1; i++) {
-        int nextNode = getSmallestNode(visited, d);
-        visited[nextNode] = true;
+        if (d[nextNode] < distance) continue;
 
-        for (int j = 0; j < graph[nextNode].size(); j++) {
-            int cost = d[nextNode] + graph[nextNode][j].second;
+        for (int i = 0; i < graph[nextNode].size(); i++) {
+            int cost = d[nextNode] + graph[nextNode][i].second;
 
-            if (cost < d[graph[nextNode][j].first]) {
-                d[graph[nextNode][j].first] = cost;
+            if (cost < d[graph[nextNode][i].first]) {
+                d[graph[nextNode][i].first] = cost;
+                pq.push({-cost, graph[nextNode][i].first});
             }
         }
     }
@@ -53,7 +42,6 @@ int main() {
     cin >> start;
 
     vector<vector<pair<int, int>>> graph(n + 1);
-    vector<bool> visited(n + 1, false);
     vector<int> d(n + 1, INF);
 
     for (int i = 0; i < m; i++) {
@@ -63,7 +51,7 @@ int main() {
         graph[from].push_back({to, cost});
     }
 
-    dijkstra(graph, visited, d);
+    dijkstra(graph, d);
 
     for (int i = 1; i < n + 1; i++) {
         if (d[i] == INF) cout << "Infinity" << '\n';
